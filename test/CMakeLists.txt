@@ -12,3 +12,8 @@ add_executable(test_swap test_swap.c)
 set_target_properties(test_swap PROPERTIES COMPILE_FLAGS -DTEST)
 target_link_libraries(test_swap swap)
 add_test(test_swap test_swap)
+
+add_executable(test_state test_state.c)
+set_target_properties(test_state PROPERTIES COMPILE_FLAGS -DTEST)
+target_link_libraries(test_state state)
+add_test(test_state test_state)
