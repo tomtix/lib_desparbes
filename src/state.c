@@ -13,40 +13,34 @@ State *initState(int nbState)
     State *state = malloc(sizeof(State));
     state->buffer = malloc(nbState * sizeof(int));
     state->nbState = nbState;
-    resetState(state);
     return state;
 }
 
-void resetState(State *state)
+void resetState(State *state, int value)
 {
     for (int i = 0; i < state->nbState; i++)
-	state->buffer[i] = 1;
+	state->buffer[i] = value;
 }
 
-void setRefuseState(State *state, int id)
+void setState(State *state, int value, int id)
 {
     if (id < 0 || id >= state->nbState)
 	fprintf(stderr, "Error: incorrect state identifier.\n");
     else
-	state->buffer[id] = 0;
+	state->buffer[id] = value;
 }
 
-int analyseState(State *state)
+int getState(State *state, int id)
 {
-    int i = 0;
+    return state->buffer[id];
+}
 
-    while (i < state->nbState && !state->buffer[i])
-	i++;
-
-    if (i >= state->nbState)
-	return -1;
-
-    int firstMatch = i;
-
-    for (i++; i < state->nbState; i++)
-	if (state->buffer[i])
-	    return -1;
-    return firstMatch;
+int analyseState(State *state, int value)
+{
+    for (int i = 0; i < state->nbState; i++)
+	if (state->buffer[i] == value)
+	    return i;
+    return -1;
 }	
 
 void destroyState(State *state)

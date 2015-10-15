@@ -22,9 +22,9 @@ static void cursorList(List *list, int position)
     if(list->posCursor > position){
 	list->posCursor = 0;
 	list->cursor = list->first;
-	if(position > list->length)
-	    fprintf(stderr, "Error: position asked is outside the list.\n");
     }
+    if(position > list->length)
+	fprintf(stderr, "Error: position asked is outside the list.\n");
 
     while(list->posCursor < position){
 	list->posCursor++;
@@ -54,6 +54,22 @@ List *initList(int dataSize)
     return list;
 }
 
+
+void resetList(List *list)
+{
+    ElementList *cursor = list->first->next;
+    ElementList *destroy = list->first->next;
+    
+    while(cursor != list->first){
+	cursor = cursor->next;
+	free(destroy->data);
+	free(destroy);
+	destroy = cursor;
+    }
+    
+    list->length = 0;
+}   
+
 int voidList(List *list)
 {
     return (list->length <= 0);
@@ -65,7 +81,7 @@ void addDataList(List *list, void *data, int position)
     newElementList->data = malloc(list->dataSize);
 
     if(newElementList == NULL || newElementList->data == NULL){
-	fprintf(stderr, "Error: malloc failed intempting adding data to list.\n");
+	fprintf(stderr, "Error: malloc failed attempting adding data to list.\n");
 	return;
     }
 
@@ -80,7 +96,7 @@ void addDataList(List *list, void *data, int position)
 void *readDataList(List *list, int position)
 {
     cursorList(list, position);
-    return list->cursor->data;
+    return list->cursor->next->data;
 } 
 
 void removeDataList(List *list, int position)
@@ -96,15 +112,7 @@ void removeDataList(List *list, int position)
 
 void destroyList(List *list)
 {
-    ElementList *cursor = list->first->next;
-    ElementList *destroy = list->first->next;
-    
-    while(cursor != list->first){
-	cursor = cursor->next;
-	free(destroy->data);
-	free(destroy);
-	destroy = cursor;
-    }
+    resetList(list);
     free(list->first);
     free(list);
 }

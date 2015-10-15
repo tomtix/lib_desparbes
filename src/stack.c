@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "stack.h"
 
 typedef struct ElementStack{
@@ -32,12 +33,28 @@ Stack *initStack(int dataSize)
     return stack;
 }
 
+void resetStack(Stack *stack)
+{
+    ElementStack *cursor = stack->first;
+    ElementStack *destroy = stack->first;
+    
+    while(cursor != NULL){
+	cursor = cursor->next;
+	free(destroy->data);
+	free(destroy);
+	destroy = cursor;
+    }
+    
+    stack->first = NULL;
+    stack->length = 0;
+}   
+
 int voidStack(Stack *stack)
 {
     return (stack->length <= 0);
 }
 
-void pushStack(Stack *stack, void* data)
+void addDataStack(Stack *stack, void* data)
 {
     ElementStack *newElementStack = malloc(sizeof(ElementStack));
     newElementStack->data = malloc(stack->dataSize);
@@ -53,21 +70,7 @@ void pushStack(Stack *stack, void* data)
     stack->length++;
 }
 
-void *popStack(Stack *stack)
-{
-    if(voidStack(stack)){
-	fprintf(stderr, "Error: popping of a void stack.\n");
-	return NULL;
-    }
-    ElementStack *destroy = stack->first;
-    void* data = destroy->data;
-    stack->first = destroy->next;
-    stack->length--;
-    free(destroy);
-    return data;
-}    
-
-void *peekStack(Stack *stack)
+void *readDataStack(Stack *stack)
 {
     if(voidStack(stack)){
 	fprintf(stderr, "Error: peeking of a void stack.\n");
@@ -76,16 +79,21 @@ void *peekStack(Stack *stack)
     return stack->first->data;
 }
 
+void removeDataStack(Stack *stack)
+{
+    if(voidStack(stack)){
+	fprintf(stderr, "Error: removing data of a void stack.\n");
+	return;
+    }
+    ElementStack *destroy = stack->first;
+    stack->first = destroy->next;
+    stack->length--;
+    free(destroy->data);
+    free(destroy);
+}
+
 void destroyStack(Stack *stack)
 {
-    ElementStack *cursor = stack->first;
-    ElementStack *destroy = stack->first;
-    
-    while(cursor != NULL){
-	cursor = cursor->next;
-	free(destroy->data);
-	free(destroy);
-	destroy = cursor;
-    }
+    resetStack(stack);
     free(stack);
 }

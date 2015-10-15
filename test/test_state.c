@@ -4,31 +4,40 @@
 
 #include "state.h"
 
-void test_setRefuseState()
+enum {
+    ACCEPT, REFUSE, POTENTIAL
+};
+
+void test_getState(void)
 {
     State *state = initState(5);
-    setRefuseState(state, 2);
+    resetState(state, POTENTIAL);
+    setState(state, REFUSE, 2);
 
-    assert(analyseState(state) == -1);
+    assert(getState(state, 2) == REFUSE);
 
-    setRefuseState(state, 0);
-    setRefuseState(state, 1);
-    setRefuseState(state, 3);
-    
-    assert(analyseState(state) == 4);
     destroyState(state);
+    printf("test_getState successful\n");
 }
+    
 
-void test_analyseState()
+void test_analyseState(void)
 {
     State *state = initState(5);
-    assert(analyseState(state) == -1);
+    resetState(state, POTENTIAL);
+    setState(state, REFUSE, 2);
+
+    assert(analyseState(state, ACCEPT) == -1);
+    assert(analyseState(state, POTENTIAL) == 0);
+    assert(analyseState(state, REFUSE) == 2);
+
     destroyState(state);
+    printf("test_analyseState successful\n");
 }
 
 int main(int argc, char *argv[])
 {
-    test_setRefuseState();
+    test_getState();
     test_analyseState();
     return EXIT_SUCCESS;
 }

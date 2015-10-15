@@ -10,6 +10,7 @@ void test_swap()
     int b = 2;
     swap(&a, &b, sizeof(int));
     assert(a == 2 && b == 4);
+    printf("test_swap successful\n");
 }
 
 int main(int argc, char *argv[])

@@ -9,6 +9,18 @@ void test_voidList()
     List *list = initList(sizeof(int));
     assert(voidList(list));
     destroyList(list);
+    printf("test_voidList successful\n");
+}
+
+void test_resetList()
+{
+    List *list = initList(sizeof(int));
+    int a = 42;
+    addDataList(list, &a, 0);
+    resetList(list);
+    assert(voidList(list));
+    destroyList(list);
+    printf("test_resetList successful\n");
 }
 
 void test_readDataList()
@@ -21,6 +33,7 @@ void test_readDataList()
     b = *((int *)(readDataList(list, 0)));
     assert(b == 42 && !voidList(list));
     destroyList(list);
+    printf("test_readDataList successful\n");
 }
 
 void test_removeDataList()
@@ -32,6 +45,7 @@ void test_removeDataList()
     removeDataList(list, 0);
     assert(voidList(list));
     destroyList(list);
+    printf("test_removeDataList successful\n");
 }
 
 int main(int argc, char *argv[])

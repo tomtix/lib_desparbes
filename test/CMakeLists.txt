@@ -17,3 +17,8 @@ add_executable(test_state test_state.c)
 set_target_properties(test_state PROPERTIES COMPILE_FLAGS -DTEST)
 target_link_libraries(test_state state)
 add_test(test_state test_state)
+
+add_executable(test_search test_search.c)
+set_target_properties(test_search PROPERTIES COMPILE_FLAGS -DTEST)
+target_link_libraries(test_search search)
+add_test(test_search test_search)
