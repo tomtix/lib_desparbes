@@ -4,48 +4,23 @@
 
 #include "stack.h"
 
-typedef struct ElementStack{
-    void *data;
-    struct ElementStack *next;
-}ElementStack;
-
 typedef struct Stack{
-    ElementStack *first;
+    void **buffer;
     int length;
-    int dataSize;
+    int bufferSize;
 }Stack;
 
-Stack *initStack(int dataSize)
+Stack *initStack()
 {
-    if(dataSize <= 0){
-	fprintf(stderr, "Error: incorrect size of data in stack.\n");
-	return NULL;
-    }
-
     Stack *stack = malloc(sizeof(Stack));
-
-    if(stack == NULL)
-	fprintf(stderr, "Error: malloc failed during stack initilization.\n");
-
-    stack->first = NULL;
     stack->length = 0;
-    stack->dataSize = dataSize;
+    stack->bufferSize = 4;
+    stack->buffer = malloc(stack->bufferSize * sizeof(void*));
     return stack;
 }
 
 void resetStack(Stack *stack)
 {
-    ElementStack *cursor = stack->first;
-    ElementStack *destroy = stack->first;
-    
-    while(cursor != NULL){
-	cursor = cursor->next;
-	free(destroy->data);
-	free(destroy);
-	destroy = cursor;
-    }
-    
-    stack->first = NULL;
     stack->length = 0;
 }   
 
@@ -54,46 +29,41 @@ int voidStack(Stack *stack)
     return (stack->length <= 0);
 }
 
-void addDataStack(Stack *stack, void* data)
+void pushStack(Stack *stack, void* data)
 {
-    ElementStack *newElementStack = malloc(sizeof(ElementStack));
-    newElementStack->data = malloc(stack->dataSize);
-
-    if(newElementStack == NULL || newElementStack->data == NULL){
-	fprintf(stderr, "Error: malloc failed intempting pushing stack.\n");
-	return;
+    if(stack->length >= stack->bufferSize){
+	stack->bufferSize *= 2;
+	stack->buffer = realloc(stack->buffer, 
+				stack->bufferSize * sizeof(void*));
     }
-
-    memcpy(newElementStack->data, data, stack->dataSize);
-    newElementStack->next = stack->first;
-    stack->first = newElementStack;
-    stack->length++;
+    stack->buffer[stack->length++] = data;
 }
 
-void *readDataStack(Stack *stack)
+void *peekStack(Stack *stack)
 {
-    if(voidStack(stack)){
+    if(stack->length <= 0){
 	fprintf(stderr, "Error: peeking of a void stack.\n");
 	return NULL;
     }
-    return stack->first->data;
+    return stack->buffer[stack->length - 1];
 }
 
-void removeDataStack(Stack *stack)
+void *popStack(Stack *stack)
 {
-    if(voidStack(stack)){
-	fprintf(stderr, "Error: removing data of a void stack.\n");
-	return;
+    if(stack->length <= 0){
+	fprintf(stderr, "Error: removing data from a void stack.\n");
+	return NULL;
     }
-    ElementStack *destroy = stack->first;
-    stack->first = destroy->next;
-    stack->length--;
-    free(destroy->data);
-    free(destroy);
+    return stack->buffer[--stack->length];
+}
+
+int lengthStack(Stack *stack)
+{
+    return stack->length;
 }
 
 void destroyStack(Stack *stack)
 {
-    resetStack(stack);
+    free(stack->buffer);
     free(stack);
 }

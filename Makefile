@@ -1,4 +1,9 @@
+.PHONY: test
+
 all: debug
+
+test:
+	cd build/debug; make test
 
 debug: 
 	cd scripts; ./install.sh

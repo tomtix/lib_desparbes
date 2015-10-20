@@ -22,3 +22,8 @@ add_executable(test_search test_search.c)
 set_target_properties(test_search PROPERTIES COMPILE_FLAGS -DTEST)
 target_link_libraries(test_search search)
 add_test(test_search test_search)
+
+add_executable(test_queue test_queue.c)
+set_target_properties(test_queue PROPERTIES COMPILE_FLAGS -DTEST)
+target_link_libraries(test_queue queue)
+add_test(test_queue test_queue)
