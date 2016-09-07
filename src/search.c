@@ -1,13 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "search.h"
 
 int intcmp(const void *v1, const void *v2)
 {
     return *((int*)v1) - *((int*)v2);
 }
 
-int search(void *array, size_t element_size, size_t array_size, void *element, 
-	   int (*compare)(const void *v1, const void *v2))
+int search(void *array, size_t element_size, size_t array_size,
+           void *element, compare_t compare)
 {
     int l = 0;
     int r = array_size - 1;

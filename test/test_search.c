@@ -20,10 +20,10 @@ void test_strSearch()
 {
     char t[7][9]= {"dimanche", "jeudi", "mardi", "mercredi", 
 		   "lundi", "samedi", "vendredi"};
-    assert(search(t, 9, 7, "dimanche", strcmp) == 0);
-    assert(search(t, 9, 7, "vendredi", strcmp) == 6);
-    assert(search(t, 9, 7, "jeudi", strcmp) == 1);
-    assert(search(t, 9, 7, "manchedi", strcmp) == -1);
+    assert(search(t, 9, 7, "dimanche", (compare_t) strcmp) == 0);
+    assert(search(t, 9, 7, "vendredi", (compare_t) strcmp) == 6);
+    assert(search(t, 9, 7, "jeudi", (compare_t) strcmp) == 1);
+    assert(search(t, 9, 7, "manchedi", (compare_t) strcmp) == -1);
     printf("test_strSearch successful\n");
 }
 
