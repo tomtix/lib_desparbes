@@ -15,32 +15,32 @@ void test_resetStack()
 {
     Stack *stack = initStack(sizeof(int));
     int a = 42;
-    pushStack(stack, &a);
+    addDataStack(stack, &a);
     resetStack(stack);
     assert(voidStack(stack));
     destroyStack(stack);
 }
 
-void test_peekStack()
+void test_readDataStack()
 {
     Stack *stack = initStack(sizeof(int));
     int a = 42;
     int b = 0;
 
-    pushStack(stack, &a);
-    b = *((int *)(peekStack(stack)));
+    addDataStack(stack, &a);
+    b = *((int *)(readDataStack(stack)));
     assert(b == 42 && !voidStack(stack));
     destroyStack(stack);
 }
 
-void test_popStack()
+void test_removeDataStack()
 {
     Stack *stack = initStack(sizeof(char));
     int a = 42;
 
-    pushStack(stack, &a);
+    addDataStack(stack, &a);
     assert(!voidStack(stack));
-    popStack(stack);
+    removeDataStack(stack);
     assert(voidStack(stack));
     destroyStack(stack);
 }
@@ -52,13 +52,13 @@ void test_lengthStack()
     int b = 8;
     
     assert(lengthStack(stack) == 0);
-    pushStack(stack, &a);
+    addDataStack(stack, &a);
     assert(lengthStack(stack) == 1);
-    pushStack(stack, &b);
+    addDataStack(stack, &b);
     assert(lengthStack(stack) == 2);
-    popStack(stack);
+    removeDataStack(stack);
     assert(lengthStack(stack) == 1);
-    popStack(stack);
+    removeDataStack(stack);
     assert(lengthStack(stack) == 0);
     destroyStack(stack);
 }
@@ -69,15 +69,15 @@ void test_general()
     int array[5] = {3, 14, 15, 9, 2};
 
     for (int i = 0; i < 5; i++)
-	pushStack(stack, &array[i]);
+	addDataStack(stack, &array[i]);
     
-    assert(*((int*)popStack(stack)) == 2);
-    assert(*((int*)popStack(stack)) == 9);
-    assert(*((int*)popStack(stack)) == 15);
-    assert(*((int*)popStack(stack)) == 14);
-    assert(*((int*)popStack(stack)) == 3);
+    assert(*((int*)removeDataStack(stack)) == 2);
+    assert(*((int*)removeDataStack(stack)) == 9);
+    assert(*((int*)removeDataStack(stack)) == 15);
+    assert(*((int*)removeDataStack(stack)) == 14);
+    assert(*((int*)removeDataStack(stack)) == 3);
     assert(voidStack(stack));
-    assert(popStack(stack) == NULL);
+    assert(removeDataStack(stack) == NULL);
     
     destroyStack(stack);
 }
@@ -86,8 +86,8 @@ int main(int argc, char *argv[])
 {
     test_voidStack();
     test_resetStack();
-    test_peekStack();
-    test_popStack();
+    test_readDataStack();
+    test_removeDataStack();
     test_lengthStack();
     test_general();
     return EXIT_SUCCESS;

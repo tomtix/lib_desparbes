@@ -29,7 +29,7 @@ int voidStack(Stack *stack)
     return (stack->length <= 0);
 }
 
-void pushStack(Stack *stack, void* data)
+void addDataStack(Stack *stack, void* data)
 {
     if(stack->length >= stack->bufferSize){
 	stack->bufferSize *= 2;
@@ -39,7 +39,7 @@ void pushStack(Stack *stack, void* data)
     stack->buffer[stack->length++] = data;
 }
 
-void *peekStack(Stack *stack)
+void *readDataStack(Stack *stack)
 {
     if(stack->length <= 0){
 	fprintf(stderr, "Error: peeking of a void stack.\n");
@@ -48,7 +48,7 @@ void *peekStack(Stack *stack)
     return stack->buffer[stack->length - 1];
 }
 
-void *popStack(Stack *stack)
+void *removeDataStack(Stack *stack)
 {
     if(stack->length <= 0){
 	fprintf(stderr, "Error: removing data from a void stack.\n");
