@@ -50,7 +50,7 @@ void test_lengthStack()
     Stack *stack = initStack(sizeof(char));
     int a = 42;
     int b = 8;
-    
+
     assert(lengthStack(stack) == 0);
     addDataStack(stack, &a);
     assert(lengthStack(stack) == 1);
@@ -69,8 +69,8 @@ void test_general()
     int array[5] = {3, 14, 15, 9, 2};
 
     for (int i = 0; i < 5; i++)
-	addDataStack(stack, &array[i]);
-    
+        addDataStack(stack, &array[i]);
+
     assert(*((int*)removeDataStack(stack)) == 2);
     assert(*((int*)removeDataStack(stack)) == 9);
     assert(*((int*)removeDataStack(stack)) == 15);
@@ -78,7 +78,7 @@ void test_general()
     assert(*((int*)removeDataStack(stack)) == 3);
     assert(voidStack(stack));
     assert(removeDataStack(stack) == NULL);
-    
+
     destroyStack(stack);
 }
 

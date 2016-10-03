@@ -25,7 +25,7 @@ void resetQueue(Queue *queue)
 {
     queue->head = 0;
     queue->tail = 0;
-}   
+}
 
 int voidQueue(Queue *queue)
 {
@@ -35,9 +35,9 @@ int voidQueue(Queue *queue)
 void pushQueue(Queue *queue, void* data)
 {
     if((queue->head + 1) % queue->bufferSize == queue->tail){
-	queue->bufferSize *= 2;
-	queue->buffer = realloc(queue->buffer, 
-				queue->bufferSize * sizeof(void*));
+        queue->bufferSize *= 2;
+        queue->buffer = realloc(queue->buffer,
+                                queue->bufferSize * sizeof(void*));
     }
     queue->buffer[queue->head] = data;
     queue->head = (queue->head + 1) % queue->bufferSize;
@@ -46,8 +46,8 @@ void pushQueue(Queue *queue, void* data)
 void *peekQueue(Queue *queue)
 {
     if(queue->head == queue->tail){
-	fprintf(stderr, "Error: peeking of a void queue.\n");
-	return NULL;
+        fprintf(stderr, "Error: peeking of a void queue.\n");
+        return NULL;
     }
     return queue->buffer[queue->tail];
 }
@@ -55,8 +55,8 @@ void *peekQueue(Queue *queue)
 void *popQueue(Queue *queue)
 {
     if(queue->head == queue->tail){
-	fprintf(stderr, "Error: removing data from a void queue.\n");
-	return NULL;
+        fprintf(stderr, "Error: removing data from a void queue.\n");
+        return NULL;
     }
     return queue->buffer[queue->tail++];
 }

@@ -20,31 +20,31 @@ typedef struct List{
 static void cursorList(List *list, int position)
 {
     if(list->posCursor > position){
-	list->posCursor = 0;
-	list->cursor = list->first;
+        list->posCursor = 0;
+        list->cursor = list->first;
     }
     if(position > list->length)
-	fprintf(stderr, "Error: position asked is outside the list.\n");
+        fprintf(stderr, "Error: position asked is outside the list.\n");
 
     while(list->posCursor < position){
-	list->posCursor++;
-	list->cursor = list->cursor->next;
+        list->posCursor++;
+        list->cursor = list->cursor->next;
     }
 }
 
 List *initList(int dataSize)
 {
     if(dataSize <= 0){
-	fprintf(stderr, "Error: incorrect size of data in list.\n");
-	return NULL;
+        fprintf(stderr, "Error: incorrect size of data in list.\n");
+        return NULL;
     }
 
     List *list = malloc(sizeof(List));
     ElementList *sentinel = malloc(sizeof(ElementList));
 
     if(list == NULL || sentinel == NULL)
-	fprintf(stderr, "Error: malloc failed during list initilization.\n");
-    
+        fprintf(stderr, "Error: malloc failed during list initilization.\n");
+
     sentinel->next = sentinel;
     list->cursor = sentinel;
     list->posCursor = 0;
@@ -59,21 +59,21 @@ void resetList(List *list)
 {
     ElementList *cursor = list->first->next;
     ElementList *destroy = list->first->next;
-    
+
     while(cursor != list->first){
-	cursor = cursor->next;
-	free(destroy->data);
-	free(destroy);
-	destroy = cursor;
+        cursor = cursor->next;
+        free(destroy->data);
+        free(destroy);
+        destroy = cursor;
     }
-    
+
     list->length = 0;
-}   
+}
 
 int voidList(List *list)
 {
     return (list->length <= 0);
-}	
+}
 
 void addDataList(List *list, void *data, int position)
 {
@@ -81,8 +81,8 @@ void addDataList(List *list, void *data, int position)
     newElementList->data = malloc(list->dataSize);
 
     if(newElementList == NULL || newElementList->data == NULL){
-	fprintf(stderr, "Error: malloc failed attempting adding data to list.\n");
-	return;
+        fprintf(stderr, "Error: malloc failed attempting adding data to list.\n");
+        return;
     }
 
     cursorList(list, position - 1);
@@ -97,13 +97,13 @@ void *readDataList(List *list, int position)
 {
     cursorList(list, position);
     return list->cursor->next->data;
-} 
+}
 
 void removeDataList(List *list, int position)
 {
     cursorList(list, position - 1);
     ElementList *destroy = list->cursor->next;
-    
+
     list->cursor->next = destroy->next;
     list->length--;
     free(destroy->data);

@@ -18,8 +18,8 @@ void test_intSearch()
 
 void test_strSearch()
 {
-    char t[7][9]= {"dimanche", "jeudi", "mardi", "mercredi", 
-		   "lundi", "samedi", "vendredi"};
+    char t[7][9]= {"dimanche", "jeudi", "mardi", "mercredi",
+                   "lundi", "samedi", "vendredi"};
     assert(search(t, 9, 7, "dimanche", (compare_t) strcmp) == 0);
     assert(search(t, 9, 7, "vendredi", (compare_t) strcmp) == 6);
     assert(search(t, 9, 7, "jeudi", (compare_t) strcmp) == 1);
@@ -33,4 +33,4 @@ int main(int argc, char *argv[])
     test_strSearch();
     return EXIT_SUCCESS;
 }
-    
+

@@ -57,7 +57,7 @@ void test_lengthQueue()
     Queue *queue = initQueue(sizeof(char));
     int a = 42;
     int b = 8;
-    
+
     assert(lengthQueue(queue) == 0);
     pushQueue(queue, &a);
     assert(lengthQueue(queue) == 1);
@@ -76,8 +76,8 @@ void test_general()
     int array[5] = {3, 14, 15, 9, 2};
 
     for (int i = 0; i < 5; i++)
-	pushQueue(queue, &array[i]);
-    
+        pushQueue(queue, &array[i]);
+
     assert(*((int*)popQueue(queue)) == 3);
     assert(*((int*)popQueue(queue)) == 14);
     assert(*((int*)popQueue(queue)) == 15);
@@ -85,7 +85,7 @@ void test_general()
     assert(*((int*)popQueue(queue)) == 2);
     assert(voidQueue(queue));
     assert(popQueue(queue) == NULL);
-    
+
     destroyQueue(queue);
 }
 

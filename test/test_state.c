@@ -19,7 +19,7 @@ void test_getState(void)
     destroyState(state);
     printf("test_getState successful\n");
 }
-    
+
 
 void test_analyseState(void)
 {

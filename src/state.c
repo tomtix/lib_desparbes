@@ -19,15 +19,15 @@ State *initState(int nbState)
 void resetState(State *state, int value)
 {
     for (int i = 0; i < state->nbState; i++)
-	state->buffer[i] = value;
+        state->buffer[i] = value;
 }
 
 void setState(State *state, int value, int id)
 {
     if (id < 0 || id >= state->nbState)
-	fprintf(stderr, "Error: incorrect state identifier.\n");
+        fprintf(stderr, "Error: incorrect state identifier.\n");
     else
-	state->buffer[id] = value;
+        state->buffer[id] = value;
 }
 
 int getState(State *state, int id)
@@ -38,10 +38,10 @@ int getState(State *state, int id)
 int analyseState(State *state, int value)
 {
     for (int i = 0; i < state->nbState; i++)
-	if (state->buffer[i] == value)
-	    return i;
+        if (state->buffer[i] == value)
+            return i;
     return -1;
-}	
+}
 
 void destroyState(State *state)
 {
